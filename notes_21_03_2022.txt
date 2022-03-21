@@ -625,8 +625,165 @@ We cannot write as:
  private class Demo2{}
 
 An outer class can have only public and default access.  
+------------------------------------------------------------------------------------------------------
+* In the same class all the members are accessible.
+package com.infosys.pack1;
+
+public class A {
+	private int privateNum=10;
+	int defaultNum=20;
+	protected int protectedNum=30;
+	public int publicNum=40;
+	
+	public void display()
+	{
+		System.out.println(privateNum);
+		System.out.println(defaultNum);
+		System.out.println(protectedNum);
+		System.out.println(publicNum);
+	}
+
+}
+
+*If we have a parent class and a child class in the same package, child class can access all the
+members except the private member.
+
+package com.infosys.pack1;
+
+public class A {
+	private int privateNum=10;
+	int defaultNum=20;
+	protected int protectedNum=30;
+	public int publicNum=40;
+	
+	public void display()
+	{
+		System.out.println(privateNum);
+		System.out.println(defaultNum);
+		System.out.println(protectedNum);
+		System.out.println(publicNum);
+	}
+
+}
+
+package com.infosys.pack1;
+
+public class B extends A {
+
+	 public void disp() {
+		   // System.out.println(privateNum);  private member of the base class is not accessible from the derived class
+			System.out.println(defaultNum);
+			System.out.println(protectedNum);
+			System.out.println(publicNum); 
+	 }
+}
+
+------------------------------------------------------------------------
+/* If two classes are not related with Parent-Child relationship and they are in the same package,
+all the members are accessible excluding the private member*/
+package com.infosys.pack1;
+public class A {
+	private int privateNum=10;
+	int defaultNum=20;
+	protected int protectedNum=30;
+	public int publicNum=40;
+	
+	public void display()
+	{
+		System.out.println(privateNum);
+		System.out.println(defaultNum);
+		System.out.println(protectedNum);
+		System.out.println(publicNum);
+	}
+
+}
 
 
-  
+package com.infosys.pack1;
+public class C {
+	public void disp() {
+		A a=new A();
+		//System.out.println(a.privateNum); //The private member is not accessible
+		System.out.println(a.defaultNum);
+		System.out.println(a.protectedNum);
+		System.out.println(a.publicNum);
+		
+	}
+}
+
+ --------------------------------------------------------------------------------------------------- 
+/* If we have a subclass in different package, the private and default member of the Parent class
+is not accessible in the subclass. */
+
+package com.infosys.pack1;
+public class A {
+	private int privateNum=10;
+	int defaultNum=20;
+	protected int protectedNum=30;
+	public int publicNum=40;
+	
+	public void display()
+	{
+		System.out.println(privateNum);
+		System.out.println(defaultNum);
+		System.out.println(protectedNum);
+		System.out.println(publicNum);
+	}
+
+}
 
 
+package com.infosys.pack2;
+
+import com.infosys.pack1.A;
+
+public class D extends A {
+	 public void disp() {
+		        //System.out.println(privateNum);
+			//System.out.println(defaultNum);
+			System.out.println(protectedNum);
+			System.out.println(publicNum); 
+	 }
+}
+
+--------------------------------------------------------------------------------------------------
+/* When two classes which are not having parent child relationship and they are in different packages,
+we can access only the public member of a class and rest of the members which are default or protected or private are not accessible. */
+package com.infosys.pack1;
+public class A {
+	private int privateNum=10;
+	int defaultNum=20;
+	protected int protectedNum=30;
+	public int publicNum=40;
+	
+	public void display()
+	{
+		System.out.println(privateNum);
+		System.out.println(defaultNum);
+		System.out.println(protectedNum);
+		System.out.println(publicNum);
+	}
+
+}
+
+
+package com.infosys.pack2;
+
+import com.infosys.pack1.A;
+
+public class E {
+
+	public void disp() {
+		A a=new A();
+		//System.out.println(a.privateNum); 
+		//System.out.println(a.defaultNum);
+		//System.out.println(a.protectedNum);
+		System.out.println(a.publicNum);
+		
+	}
+}
+------------------------------------------------------------------------------
+So if are using package , import and class keywords , than the sequence should be 
+* package
+* import
+* class
