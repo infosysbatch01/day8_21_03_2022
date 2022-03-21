@@ -324,7 +324,7 @@ the class which has implmented the interface.
 
 // The class which is implementing an interface needs to override all the abstract methods
 // of an interface otherwise the class which is implementing the interface needs to be
-// declared as abstract 
+// declared as an abstract class
 // From java version 8 we can have interface with methods which are having body. Prior to that 
 // we have interfaces where all the methods are without body which means they are abstract 
 // methods. From java 8 , interface can have 3 types of method:
@@ -363,3 +363,199 @@ the class which has implmented the interface.
       }
  }
 ------------------------------------------------------------------------------------------------------
+/* Interface can have variables also but those variables are public, final and static.
+as they are final variables they need to be initialised at the place of declaration otherwise
+we get a compilation error */
+
+public interface CircleArea{
+  float PI_VALUE=3.14f;
+
+  float calculateArea();
+}
+
+
+public class Circle implements CircleArea {
+
+  private int radius;
+
+   // setter and getter methods
+
+      public float calculateArea(){
+       float area=PI_VALUE*radius*radius;
+       return area;
+      }
+ }
+
+public class Main {
+   public static void main(String args[]) {
+     Circle ci=new Circle();
+     ci.setRadius(10);
+     CircleArea ca=ci;
+     System.out.println(ca.calculateArea());
+    }
+ } 
+
+
+        
+
+---------------------------------------------------------------------------------------------------------
+// One interface can extend another interface
+public interface Calculator2a{
+   int add(int a,int b);
+   int subtract(int a,int b);
+}
+
+public interface Calculator2b extends Calculator2a{
+  int divide(int a,int b);
+  int multiply(int a, int b);
+}
+
+public class Numbers2 implements Calculator2b {
+     public int add(int a,int b){
+    return a+b;
+   }
+    public int subtract(int a, int b){
+    return a-b;
+    }
+    public int divide(int a, int b){
+    return a/b;
+    }
+    public int multiply(int a,int b){
+    return a*b;
+    }
+   public void display(){
+    System.out.println("The display method of Number1");
+   }
+}
+
+public class Main2 {
+   public static void main(String args[]) {
+      Calculator2b calculator=new Numbers2();
+      System.out.println(calculator.add(1,2));
+      System.out.println(calculator.subtract(4,2));
+      System.out.println(calculator.divide(4,2));
+      System.out.println(calculator.multiply(3,2));
+    }
+ } 
+
+----------------------------------------------------------------------------------------------------
+// One interface can extend multiple interfaces. Through this in java we undergo multiple inheritance.
+
+public interface Calculator3a{
+   int add(int a,int b);
+   
+}
+
+public interface Calculator3b{
+int subtract(int a,int b);
+}
+
+public interface Calculator3c{
+ int multiply(int a, int b);
+}
+public interface Calculator3d extends Calculator3a,Calculator3b,Calculator3c{
+  int divide(int a,int b);
+ 
+}
+
+public class Numbers3 implements Calculator3d{
+   public int add(int a,int b){
+    return a+b;
+   }
+    public int subtract(int a, int b){
+    return a-b;
+    }
+    public int divide(int a, int b){
+    return a/b;
+    }
+    public int multiply(int a,int b){
+    return a*b;
+    }
+   public void display(){
+    System.out.println("The display method of Number1");
+   }
+
+}
+ 
+public class Main3 {
+   public static void main(String args[]) {
+     Calculator3d calculator=new Numbers3();
+      System.out.println(calculator.add(1,2));
+      System.out.println(calculator.subtract(4,2));
+      System.out.println(calculator.divide(4,2));
+      System.out.println(calculator.multiply(3,2));
+   }
+ }
+
+-------------------------------------------------------------------------------------
+In java a class can extend one class and can implement multiple interfaces.
+
+  public class Base{}
+  public interface Interface1{}
+  public interface Interface2{}
+  public interface Interface3{}
+ 
+  public class Derived extends Base implements Interface1,Interface2,Interface3{}
+---------------------------------------------------------------------------------------------------------------
+ Abstract classes are extended or inherited by the class which are of similar nature and follow the hierarchy
+where as interface are implemented by the class which are even not related.
+
+ Suppose we have people from different professions like a Doctor , Teacher and a Manager all these
+have a common hobby to playing instrument. 
+ 
+ public interface Musician{
+   void toPlayInstrument();
+ }
+ public interface Player{
+   void playAGame();
+ }
+
+  public class Doctor implements Musician,Player{
+    public void toMedicate(){
+     System.out.println("Treat patients");
+    }
+    public void toPlayInstrument(){
+    System.out.println("Playing flute");
+    }
+    public void playAGame(){
+    System.out.println("Playing football");
+    }
+      
+   
+  }
+
+  public class Teacher implements Musician {
+   public void toTeach(){
+    System.out.println("Teaches students");
+   }
+   public void toPlayInstrument(){
+   System.out.println("Playing Guitar");/
+   }
+
+ }
+  public class Manager implements Musician {
+   public void toManage() {
+    System.out.println("Manages the office");
+  }
+
+  public void toPlayInstrument(){
+   System.out.println("Playing Saxaphone");
+  } 
+}
+
+  public class Main{
+    public static void main(String args[]) {
+    Doctor doctor=new Doctor();
+     Musician musician1=doctor;
+     musician1.toPlayInstrument();  
+     musician1.toMedicate(); 
+     Doctor doctor=(Doctor)musician1;
+     doctor.toMedicate();  
+     Player player1=doctor;
+     player1.playAGame();  
+   //  player1.toPlayInstrument(); no as toPlayInstrument is not there in the Player Interface
+
+   }
+}
+ 
+
