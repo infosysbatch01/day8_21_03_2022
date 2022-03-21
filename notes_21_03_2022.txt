@@ -548,7 +548,7 @@ have a common hobby to playing instrument.
     Doctor doctor=new Doctor();
      Musician musician1=doctor;
      musician1.toPlayInstrument();  
-     musician1.toMedicate(); 
+     //musician1.toMedicate(); compilation error as toMedicate() method is not there in the Musician Interface 
      Doctor doctor=(Doctor)musician1;
      doctor.toMedicate();  
      Player player1=doctor;
@@ -557,5 +557,76 @@ have a common hobby to playing instrument.
 
    }
 }
- 
+----------------------------------------------------------------------------------------------------
+package com.infosys;
+public class Hello {
+	
+	public void greet() {
+		System.out.println("Hello Friends!!!!!!");
+	}
+
+}
+
+package com.infosys;
+// Hi is having the default access
+class Hi {
+  public void display() {
+	  System.out.println("Hi from Hi class");
+  }
+}
+
+
+// a class having public or default access can be 
+// accessed by a class in the same package
+
+package com.infosys;
+public class HelloMain {
+
+	public static void main(String[] args) {
+		Hello hello=new Hello();
+		hello.greet();
+                Hi hi=new Hi();
+                hi.display();
+	}
+
+}
+
+// In the below code main method which in HelloMain is in
+// different package than of Hello and Hi. Hello is 
+// having public access so it is accessible in the main
+// method of HelloMain which is in com.infosys2. Hi 
+// is having the default access and that is the reason
+// it is not accessible by the class HelloMain which is
+// in a different package.
+
+package com.infosys2;
+
+import com.infosys.Hello;
+
+public class HelloMain {
+
+	public static void main(String[] args) {
+	Hello hello=new Hello();
+	hello.greet();
+	//Hi hi=new Hi(); // As the class Hi is with the dafault access in
+	// a different package. 
+
+	}
+
+}
+-----------------------------------------------------------
+We cannot declare a class as private and protected. But an inner
+class can be private or protected.
+
+We cannot write as:
+
+ protected class Demo1{}
+
+ private class Demo2{}
+
+An outer class can have only public and default access.  
+
+
+  
+
 
