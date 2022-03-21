@@ -819,7 +819,7 @@ In the above example the exception occurs in line where we have int result=num1/
 of the error, the execution stops and further the next line is not executed and that is the reason
 we are not able to see the output as After exception.
 
-
+---------------------------------------------------------------------------------------------
  package com.infosys.exceptiondemo2;
 
   public class Demo {
@@ -835,7 +835,7 @@ Output:
 Before exception
 Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 10 out of bounds for length 10
 	at com.infosys.exceptiondemo2.Demo.main(Demo.java:8)
-
+-----------------------------------------------------------------------------------------------
 
  package com.infosys.exceptiondemo3;
 
@@ -854,7 +854,7 @@ Before exception
 Exception in thread "main" java.lang.NullPointerException: Cannot invoke "String.length()" because "str" is null
 	at com.infosys.exceptiondemo3.Demo.main(Demo.java:7)
 
-
+-------------------------------------------------------------------------------------------
 Q If we are not handling the exception , than who handles the exception?
 A We have a default exception handler which is part of JVM and it handles
 the exception , if we don't user defined handler in the code.
@@ -871,7 +871,7 @@ catch (exceptionType e) ‏
      // error handling code
 }
 
-
+---------------------------------------------------------------------------------------------
 
  package com.infosys.exceptiondemo4;
 
@@ -890,7 +890,7 @@ catch (exceptionType e) ‏
    }
  }
 
-
+----------------------------------------------------------------------------------------------
 /* Follow the try block with catch block or finally block */
 
 package com.infosys.exceptiondemo5;
@@ -907,7 +907,7 @@ package com.infosys.exceptiondemo5;
    }
  }
 
-
+-----------------------------------------------------------------------------------------------
 class Student {
     private String name;
     private int[] marks;
@@ -1062,14 +1062,14 @@ public class Student {
 		    }
 		    this.averageMarks=sum/totalSubjects; //Exception will be thrown as the value of totalSubjects is 0 
 		    System.out.println("Average Marks: "+ this.averageMarks);
-		   }
-               catch(ArithmeticException e) {
-                    //This block will execute only if any Arithmetic exception is thrown in try block
-		    System.out.println("Divide by Zero exception occurred!");
+		   } catch(ArithmeticException e) {
+                    //This block will execute only if any Arithmetic exception is thrown in
+                      try block
+		         System.out.println("Divide by Zero exception occurred!");
 	        }
 	      catch(ArrayIndexOutOfBoundsException e) {
-	           //This block will only execute if any ArrayIndexOutOfBoundsException occurs in try block
-	           System.out.println("Array index out of range exception occurred!");
+	           //This block will only execute if any ArrayIndexOutOfBoundsException occurs in try                      block
+	               System.out.println("Array index out of range exception occurred!");
               }	
 	}
    }
@@ -1084,3 +1084,566 @@ public class Tester{
 		student.calculateAverageMarks();
 	}
 }
+--------------------------------------------------------------------------------------
+   Object
+     |
+     |
+   Throwable
+     |
+     |------Error
+     |
+     |------Exception
+            |
+            |
+            |-----------RuntimeException
+                          | 
+                          |-----NullPointerException
+                          |
+                          |-----ArithmeticException
+                          |
+                          |-----ArrayIndexOutOfBoundsException
+
+   Exception e=new NullPointerException();
+ // A reference of base type can hold the address of the sub class/child class.
+
+
+package com.infosys.exceptiondemo8;
+
+
+public class Student {
+    private String name;
+    private int[] marks;
+    private float averageMarks;
+    
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int[] getMarks() {
+		return marks;
+	}
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+    
+	public void calculateAverageMarks() {
+		int sum=0;
+		int totalSubjects=0;
+		try {
+		    for (int i = 0; i <=marks.length;i++) {
+			    sum+=marks[i];
+		    }
+		    this.averageMarks=sum/totalSubjects; //Exception will be thrown as the value of totalSubjects is 0 
+		    System.out.println("Average Marks: "+ this.averageMarks);
+		   } catch(ArithmeticException e) {
+                    //This block will execute only if any Arithmetic exception is thrown in
+                      try block
+		         System.out.println("Divide by Zero exception occurred!");
+	        }
+	      catch(ArrayIndexOutOfBoundsException e) {
+	           //This block will only execute if any ArrayIndexOutOfBoundsException occurs in try                      block
+	               System.out.println("Array index out of range exception occurred!");
+              }	
+                catch(Exception e){ // As exception is base class of all the exception classes , that is the reason in catch we can write Exception as it satisfies the concept of base case reference holding the address of derived class object 
+                  //This block will handle all types of exceptions that occur in try block
+	            System.out.println("Some error occurred!");
+              }
+	}
+   }
+
+
+package com.infosys.exceptiondemo8;
+public class Tester{
+	public static void main(String[] args) {
+		Student student = new Student();
+		int[] marks = {96,65,76};
+		student.setMarks(marks);
+		student.calculateAverageMarks();
+	}
+}
+
+------------------------------------------------------------------------------------------------------
+Q Can we write the catch block which is having the reference of Exception type at the begining or in 
+between?
+A No. The code becomes unreachable for ArithmeticException and ArrayIndexOutOfBoundsException.
+Because Exception is the base class of the exception classes mentioned with the catch block.
+Now when we are placing the catch with Exception first, it is capable of handling all the exception
+[ because of base class reference can hold the reference of subclass object].Unreachable code is
+always a compilation error in the code. 
+
+[Unreachable catch block for ArithmeticException. It is already handled by the catch block for Exception.]
+
+
+package com.infosys.exceptiondemo9;
+
+
+public class Student {
+    private String name;
+    private int[] marks;
+    private float averageMarks;
+    
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int[] getMarks() {
+		return marks;
+	}
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+    
+	public void calculateAverageMarks() {
+		int sum=0;
+		int totalSubjects=0;
+		try {
+		    for (int i = 0; i <=marks.length;i++) {
+			    sum+=marks[i];
+		    }
+		    this.averageMarks=sum/totalSubjects; //Exception will be thrown as the value of totalSubjects is 0 
+		    System.out.println("Average Marks: "+ this.averageMarks);
+		   } catch(Exception e){ // As exception is base class of all the exception classes ,    that is the reason in catch we can write Exception as it satisfies the concept of base case reference holding the address of derived class object 
+                  //This block will handle all types of exceptions that occur in try block
+	            System.out.println("Some error occurred!");
+              } 
+                    catch(ArithmeticException e) {
+                    //This block will execute only if any Arithmetic exception is thrown in
+                      try block
+		         System.out.println("Divide by Zero exception occurred!");
+	        }
+	           catch(ArrayIndexOutOfBoundsException e) {
+	           //This block will only execute if any ArrayIndexOutOfBoundsException occurs in try                     // block
+	               System.out.println("Array index out of range exception occurred!");
+              }	
+              
+	}
+   }
+
+
+
+package com.infosys.exceptiondemo9;
+public class Tester{
+	public static void main(String[] args) {
+		Student student = new Student();
+		int[] marks = {96,65,76};
+		student.setMarks(marks);
+		student.calculateAverageMarks();
+	}
+}
+
+------------------------------------------------------------------------------------------
+
+package com.infosys.exceptiondemo10;
+
+public class Student {
+    private String name;
+    private int[] marks;
+    private float averageMarks;
+    
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int[] getMarks() {
+		return marks;
+	}
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+    
+	public void calculateAverageMarks() {
+		int sum=0;
+		int totalSubjects=0;
+		try {
+		    for (int i = 0; i <=marks.length;i++) {
+			    sum+=marks[i];
+		    }
+		    this.averageMarks=sum/totalSubjects; //Exception will be thrown as the value of totalSubjects is 0 
+		    System.out.println("Average Marks: "+ this.averageMarks);
+		   } 
+                    catch(ArithmeticException e) {
+                    //This block will execute only if any Arithmetic exception is thrown in
+                    //  try block
+		         System.out.println("Divide by Zero exception occurred!");
+	        } catch(Exception e){ // As exception is base class of all the exception classes ,               that is the reason in catch we can write Exception as it satisfies the concept of base case reference holding the address of derived class object 
+                  //This block will handle all types of exceptions that occur in try block
+	            System.out.println("Some error occurred!");
+              } 
+        
+	           catch(ArrayIndexOutOfBoundsException e) {
+	           //This block will only execute if any ArrayIndexOutOfBoundsException occurs in try                     // block
+	               System.out.println("Array index out of range exception occurred!");
+              }	
+              
+	}
+   }
+
+
+
+package com.infosys.exceptiondemo10;
+public class Tester{
+	public static void main(String[] args) {
+		Student student = new Student();
+		int[] marks = {96,65,76};
+		student.setMarks(marks);
+		student.calculateAverageMarks();
+	}
+}
+
+
+[ IF WE HAVE MULTIPLE CATCH BLOCKS AND IN ANY CATCH BLOCK WE HAVE THE HANDLER AS BASE CLASS REFERENCE, 
+ THEN WE NEED TO PUT THAT CATCH BLOCK AT THE END. IT CANNOT BE AT THE BEGINING OR MIDDLE OF THE CATCH
+ BLOCKS] 
+------------------------------------------------------------------------------------------------
+Nested try catch block.
+
+//main try block
+try{
+    statement 1;
+    statement 2;
+    //nested try-catch block
+    try{
+        statement 3;
+    }
+    catch(Exception ex){
+        //exception message
+    }
+}
+catch(Exception ex){
+    //exception message
+}
+
+
+
+
+package com.infosys.exceptiondemo11;
+
+public class Student {
+    private String name;
+    private int[] marks;
+    private float averageMarks;
+    
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int[] getMarks() {
+		return marks;
+	}
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+    
+	public void calculateAverageMarks() {
+		int sum=0;
+		int totalSubjects=0;
+		//outer try block
+		try {
+			 //inner try block
+			 try {
+				for (int i = 0; i <marks.length;i++) {
+				    sum+=marks[i];
+			      }
+		this.averageMarks=sum/totalSubjects;//Exception will be raised as totalSubjects is 0 
+		System.out.println("Average Marks: "+ this.averageMarks);
+			}
+		//inner catch block
+		catch(ArithmeticException e) {
+		       //This block will only execute if any Arithmetic exception occurs in try block
+		   System.out.println("Divide by Zero exception occurred!");
+			    }
+			catch(ArrayIndexOutOfBoundsException e) {
+				//This block will only execute if any ArrayIndexOutOfBoundsException occurs in try block
+				System.out.println("Array index out of range exception occurred!");
+			} 
+		}
+		//outer catch block
+		catch(Exception e) {
+			//This block will handle all types of exceptions that occur in try block
+			System.out.println("Some error occurred!");
+		}
+	   
+               }
+
+   }
+
+
+
+package com.infosys.exceptiondemo11;
+public class Tester{
+	public static void main(String[] args) {
+		Student student = new Student();
+		int[] marks = {96,65,76};
+		student.setMarks(marks);
+		student.calculateAverageMarks();
+	}
+}
+
+-------------------------------------------------------------------------------
+try{
+     //Statements that may cause an exception
+}
+catch (ExceptionType e) ‏{
+     //Error handling code
+}
+finally {
+	//Statements that must be executed 
+}
+
+
+package com.infosys.exceptiondemo12;
+
+public class Student {
+	private String name;
+	private int[] marks;
+	private float averageMarks;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setStudentName(String name) {
+		this.name = name;
+	}
+
+	public int[] getMarks() {
+		return marks;
+	}
+
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+
+	public void calculateAverageMarks() {
+		int sum = 0;
+		int totalSubjects = 0;
+		try {
+			// Comment the below line and observe the output
+			System.out.println("Name length : " + this.name.length());
+			for (int i = 0; i < marks.length; i++) {
+				++totalSubjects;
+				sum += marks[i];
+			}
+			this.averageMarks = sum / totalSubjects;
+			System.out.println("Average Marks: " + this.averageMarks);
+		}
+
+		catch (ArithmeticException e) {
+			/*This block will only execute if any 
+			 * Arithmetic exception occurs in try block
+			 */
+			System.out.println("Divide by Zero exception occurred!");
+		}
+
+		catch (ArrayIndexOutOfBoundsException e) {
+			/*This block will only execute if any 
+			 * ArrayIndexOutOfBoundsException occurs in try block
+			 */
+			System.out.println("Array index out of range exception occurred!");
+		} catch (Exception e) {
+			/* This block will handle all types of exceptions 
+			 * that occur in try block
+			 */
+			System.out.println("Some error occurred!");
+		} finally {
+			/*This block will be executed irrespective of 
+			 * whether an exception occurs or not
+			 */
+			System.out.println("Thank you for using the application!");
+		}
+	}
+}
+
+
+package com.infosys.exceptiondemo12;
+public class Tester {
+	public static void main(String[] args) {
+		Student student1 = new Student();
+		int[] marks = { 96, 65, 76 };
+		student1.setMarks(marks);
+		student1.calculateAverageMarks();
+	}
+}
+
+---------------------------------------------------------------------------------
+
+/* Checked exception are those exception which needs to handled in the code by the coder otherwise
+it shows compilation error. */
+
+
+
+package com.infosys.exceptiondemo13;
+
+import java.io.FileInputStream;
+
+public class CheckedExceptionDemo{
+    public static void main(String args[]) {
+     FileInputStream fis=new FileInputStream("data.dat");
+    }
+  }    
+/* 
+- Unhandled exception type 
+	 FileNotFoundException */
+
+Solution of the above challege:
+
+package com.infosys.exceptiondemo14;
+
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+public class CheckedExceptionDemo{
+    public static void main(String args[]) {
+     try {
+         FileInputStream fis=new FileInputStream("data.dat");
+	} catch (FileNotFoundException e) {
+		System.out.println(e);
+	}
+    }
+  }
+
+---------------------------------------------------------------------------------------------------
+/* Unchecked exception if not handled in the code, it won't show any compilation error.
+That is the reason they are called as Unchecked Exception */
+
+package com.infosys.exceptiondemo15;
+
+public class UncheckedExceptionDemo {
+     public static void main(String args[]) {
+     int num[]=new int[10];
+     System.out.println(num[20]);
+     }
+  }
+[Note : RuntimeException and its subclasses are Unchecked Exception and Exception and its subclasses
+   excluding RuntimeException is Checked Exception]
+---------------------------------------------------------------------------------------------------
+
+
+package com.infosys.exceptiondemo16;
+public class Student {
+	private String name;
+	private int[] marks;
+	private float averageMarks;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setStudentName(String name) {
+		this.name = name;
+	}
+
+	public int[] getMarks() {
+		return marks;
+	}
+
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+
+	public void calculateAverageMarks() {
+		int sum = 0;
+		int totalSubjects = 0;
+		try {
+			for (int i = 0; i < marks.length; i++) {
+				if (marks[i] < 0) {
+					// Throwing exception manually in case of negative marks
+					// value
+                                        Exception e=new Exception("Marks must not be negative!");
+                                        throw e;
+					//throw new Exception("Marks must not be negative!");
+				}
+				++totalSubjects;
+				sum += marks[i];
+			}
+			this.averageMarks = sum / totalSubjects;
+			System.out.println("Average Marks: " + this.averageMarks);
+		}
+
+		catch (ArithmeticException e) {
+			// This block will only execute if any Arithmetic exception occurs
+			// in try block
+			System.out.println("Divide by Zero exception occurred!");
+		}
+
+		catch (ArrayIndexOutOfBoundsException e) {
+			// This block will only execute if any
+			// ArrayIndexOutOfBoundsException occurs in try block
+			System.out.println("Array index out of range exception occurred!");
+		} catch (Exception e) {
+			// This block will handle all the types of exceptions that occur in
+			// try block
+			// Error message is being displayed using getMessage() of Exception
+			// class
+			System.out.println(e.getMessage());
+
+		} finally {
+			// This block will be executed irrespective of whether an exception
+			// has occurred or not
+			System.out.println("Thank you for using the application!");
+		}
+	}
+}
+
+package com.infosys.exceptiondemo16;
+public class Tester {
+	public static void main(String[] args) {
+		Student student1 = new Student();
+		int[] marks = { 96, -65, 76 };
+		student1.setMarks(marks);
+		student1.calculateAverageMarks();
+	}
+}
+
+------------------------------------------------------------------------------------------------------
+
+
