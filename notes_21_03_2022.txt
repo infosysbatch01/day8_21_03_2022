@@ -1,0 +1,123 @@
+
+package infosys.demo.withoutabstract;
+
+   public class Triangle {
+     private int x;
+     private int y;
+
+     public int calculateArea() {
+      int area=(x*y)/2;
+      return area;
+     }
+      public void setX(int x){
+       this.x=x;
+      }
+      // setter/getters
+
+     }  
+
+
+package infosys.demo.withoutabstract;
+
+    public class Rectangle {
+    private int x;
+    private int y;
+    public int calculateArea() {
+     int area=x*y;
+     return area;
+    }
+    setter/getters
+   }
+
+package infosys.demo.withoutabstract;
+
+   public class Display {
+
+    public void display(Triangle t) {
+    System.out.println(t.calculateArea());
+    }
+
+   public void display(Rectangle r) {
+    System.out.println(r.calculateArea());
+    }
+  }
+
+package infosys.demo.withoutabstract;
+
+  public class Main  {
+   public static void main(String args[]) {
+      Display disp=new Display();
+      Triangle triangle=new Triangle();
+      Rectangle rectangle=new Rectangle();
+      triangle.setX(10);
+      triangle.setY(2);
+      disp.display(triangle);
+      rectangle.setX(20);
+      rectangle.setY(10);
+      disp.display(rectangle);
+    }
+ }
+      
+---------------------------------------------------------
+* In Triangle and Rectangle classes we have repeated x and y and also setters and getters.
+* The method calculateArea in both the classes ( Rectangle and Triangle ) are having same
+  signature but implementations are different.
+* We are writing overloaded form for the displayArea in Display class. So the challenge is
+  when we add one more shape we have add one more method in the class Display.
+------------------------------------------------------------------------------------------
+
+package infosys.demo.withabstract;
+   public class Shape {
+    protected int x;
+    protected int y;
+   
+    setters/getters;
+
+   }
+
+  package infosys.demo.withabstract;
+  public class Rectangle extends Shape {
+
+    public int calculateArea() {
+     int area=x*y;
+     return area;
+    }
+  }
+
+package infosys.demo.withabstract;
+  public class Triangle extends Shape {
+
+    public int calculateArea() {
+     int area=(x*y)/2;
+     return area;
+    }
+  }
+
+
+package infosys.demo.withabstract;
+ public class Display {
+
+    public void display(Shape s) {
+    System.out.println(s.calculateArea());
+    }
+
+  }
+
+package infosys.demo.withabstract;
+  public class Main {
+      public static void main(String str[]) {
+      Display disp=new Display();
+      Shape shape=null;
+      Triangle triangle=new Triangle();
+      triangle.setX(10);
+      triangle.setY(20);
+      shape=triangle; // Base class reference storing the address of the derived class object
+      disp.displayArea(shape);
+      Rectangle rectangle=new Rectangle();
+      rectangle.setX(10);
+      rectangle.setY(20);
+      shape=rectangle;
+      disp.displayArea(shape);
+    }
+  } 
+   
