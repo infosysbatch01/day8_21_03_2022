@@ -1,3 +1,116 @@
+* class and object
+* Features of OOP:-
+  ** Encapsulation===> Encapsulating methods and variables within a class and using access modifiers 
+     to decide which member to be kept exposed outside the class and which members to hide
+  ** Inheritance ====> We dont have multiple Inehritance in Java through classes but we can achieve
+     it through interfaces
+  ** Polymorphism ===> Method overloading and Method overriding
+  ** Abstraction ====> ( Abstract classes and Interfaces )
+------------------------------------------------------------------------------------------------
+Modifiers
+* static===>
+  static can be used for inner classes, with variables of a class
+  and with methods
+* final====> final can be used with class,methods and variables
+* abstract=> abstract can be used with methods and class/
+
+  public class Revise1 {
+   public static void main(String args[]) {
+     static int i=10;
+     System.out.println(i);
+   }
+ }
+
+1) Compilation error ( a local member cannot be declared as static).
+   static should be used for the member of a class. So method, inner class and variables(not the local) can be declared as static)
+2) No compilation error
+
+
+  public class Revise2 {
+   public static void main(String args[]) {
+     final int i=10;
+     System.out.println(i);
+   }
+ }
+
+1) Compilation error
+2) Ouput is shown
+Ans 2. Local variables can be declared as final.
+
+-------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------
+* We cannot create an object of abstract class.
+  Because we have some of the methods as abstract which are
+  not implemented.
+* Abstract class can be without abstract method.
+* Abstract class are designed for the purpose of Inheritance. 
+* The subclass should override all the abstract methods of the abstract class.
+* If the subclass is not overriding all the abstract methods, the subclass itself needs
+  to be declared as an abstract class.
+
+  public final abstract class Demo{}
+* A class cannot be declared as final and abstract both because
+  abstract class needs to be inherited and final class we
+  don't inherit.
+* We design abstract class when the base class needs to 
+  have some methods for which the implementation will be different in the subclass.
+
+
+package demo_trainer_21_03_2022;
+
+public abstract class Base {
+	private int num;
+	
+   public Base()
+   {
+	   num=10;
+	   System.out.println("I am the constructor");
+   }
+  
+   abstract void method();
+}
+
+
+package demo_trainer_21_03_2022;
+
+public class Derived extends Base {
+
+	
+	public Derived()
+	{
+		System.out.println("I am the derived class parameterless constructor");
+	}
+	
+	@Override
+	void method() {
+		System.out.println("I am the implemented method");
+		
+	}
+
+	
+}
+
+package demo_trainer_21_03_2022;
+
+public abstract class Base {
+	private int num;
+	
+   public Base()
+   {
+	   num=10;
+	   System.out.println("I am the constructor");
+   }
+  
+   abstract void method();
+}
+
+
+
+
+
+
+-----------------------------  
 
 package infosys.demo.withoutabstract;
 
@@ -121,3 +234,132 @@ package infosys.demo.withabstract;
     }
   } 
    
+
+----------------------------
+
+
+package infosys.demo.withabstract;
+   public abstract class Shape {
+    protected int x;
+    protected int y;
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+   
+   public abstract int calculateArea();
+   
+   }
+
+ package infosys.demo.withabstract;
+  public class Rectangle extends Shape {
+
+    public int calculateArea() {
+     int area=x*y;
+     return area;
+    }
+  }
+
+package infosys.demo.withabstract;
+  public class Triangle extends Shape {
+
+    public int calculateArea() {
+     int area=(x*y)/2;
+     return area;
+    }
+  }
+
+package infosys.demo.withabstract;
+ public class Display {
+
+    public void displayArea(Shape s) {
+    System.out.println(s.calculateArea());
+    }
+
+  }
+
+package infosys.demo.withabstract;
+  public class Main {
+      public static void main(String str[]) {
+      Display disp=new Display();
+      Shape shape=null;
+      Triangle triangle=new Triangle();
+      triangle.setX(10);
+      triangle.setY(20);
+      shape=triangle; // Base class reference storing the address of the derived class object
+      disp.displayArea(shape);
+      Rectangle rectangle=new Rectangle();
+      rectangle.setX(10);
+      rectangle.setY(20);
+      shape=rectangle;
+      disp.displayArea(shape);
+    }
+  } 
+
+-----------------------------------------------------------------------------------------------------
+Interfaces provide  protocols or rules which has to be followed by the class which is implementing
+the interface.
+
+We cannot create an object of interface but we can
+create a reference variable of interface and this
+reference variable can hold the reference of the object of 
+the class which has implmented the interface. 
+// In interface we have methods which are public and abstract.
+
+
+    public interface Calculator1 {
+       int add(int a,int b);
+       int subtract(int a, int b);
+       int divide(int a, int b);
+       int multiply(int a,int b);
+    }
+
+// The class which is implementing an interface needs to override all the abstract methods
+// of an interface otherwise the class which is implementing the interface needs to be
+// declared as abstract 
+// From java version 8 we can have interface with methods which are having body. Prior to that 
+// we have interfaces where all the methods are without body which means they are abstract 
+// methods. From java 8 , interface can have 3 types of method:
+// 1) abstract method ( without a body)
+// 2) default method ( will have body)
+// 3) static method  ( will have body)
+
+ public class Numbers1 implements Calculator1{
+    public int add(int a,int b){
+    return a+b;
+   }
+    public int subtract(int a, int b){
+    return a-b;
+    }
+    public int divide(int a, int b){
+    return a/b;
+    }
+    public int multiply(int a,int b){
+    return a*b;
+    }
+   public void display(){
+    System.out.println("The display method of Number1");
+   }
+  }
+  public class Main1{
+     public static void main(String args[]) {
+      Calculator1 calculator=new Numbers1();
+      System.out.println(calculator.add(1,2));
+      System.out.println(calculator.subtract(4,2));
+      System.out.println(calculator.divide(4,2));
+      System.out.println(calculator.multiply(3,2));
+      //calculator.display();  // We wont be able to address display method which is specific to 
+      // the subclass as we dont have any declaration in the interface
+      Numbers1 number=(Numbers1)calculator;
+      number.display(); 
+      }
+ }
+------------------------------------------------------------------------------------------------------
