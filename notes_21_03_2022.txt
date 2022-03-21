@@ -787,3 +787,300 @@ So if are using package , import and class keywords , than the sequence should b
 * package
 * import
 * class
+------------------------------------------------------------------------------------------------------
+Whenever we are writing a code with a programming language , we can have 3 types of error:-
+* Compilation error( When we have error in syntax)
+* Logical error ( We dont get the output as expected)
+* Runtime error / Exception ===> ( Runtime)
+
+In java for Exception we have class hierarchy. NullPointerException, ArithmeticException, ClassCastException, ArrayIndexOutOfBoundsException.
+
+
+ package com.infosys.exceptiondemo1;
+
+  public class Demo1 {
+    public static void main(String args[]) {
+     int num1=10;
+     int num2=0;
+     System.out.println("Before exception");
+     int result=num1/num2;
+     System.out.println("After exception");
+   }
+ }
+
+The output:
+
+Before exception
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at com.infosys.exceptiondemo1.Demo1.main(Demo1.java:9)
+
+  
+In the above example the exception occurs in line where we have int result=num1/num2. After occurance
+of the error, the execution stops and further the next line is not executed and that is the reason
+we are not able to see the output as After exception.
+
+
+ package com.infosys.exceptiondemo2;
+
+  public class Demo {
+    public static void main(String args[]) {
+     int numbers[]=new int[10];
+     System.out.println("Before exception");
+     System.out.println(numbers[10]);    
+     System.out.println("After exception");
+   }
+ }
+Output:
+
+Before exception
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 10 out of bounds for length 10
+	at com.infosys.exceptiondemo2.Demo.main(Demo.java:8)
+
+
+ package com.infosys.exceptiondemo3;
+
+  public class Demo {
+    public static void main(String args[]) {
+     String str=null;
+     System.out.println("Before exception");
+     System.out.println(str.length());    
+     System.out.println("After exception");
+   }
+ }
+
+Output:
+
+Before exception
+Exception in thread "main" java.lang.NullPointerException: Cannot invoke "String.length()" because "str" is null
+	at com.infosys.exceptiondemo3.Demo.main(Demo.java:7)
+
+
+Q If we are not handling the exception , than who handles the exception?
+A We have a default exception handler which is part of JVM and it handles
+the exception , if we don't user defined handler in the code.
+
+Q How we handle exception in the code?
+A With the exception handler.
+
+try
+{
+     // statements that may cause an exception
+}
+catch (exceptionType e) ‏
+{
+     // error handling code
+}
+
+
+
+ package com.infosys.exceptiondemo4;
+
+  public class Demo {
+    public static void main(String args[]) {
+     int num1=10;
+     int num2=0;
+     System.out.println("Before exception");
+    try{
+        int result=num1/num2;
+       }catch(ArithmeticException exception){
+        System.out.println(exception); 
+         //System.out.println("We cannot divide a number by 0");
+       }
+      System.out.println("After exception");
+   }
+ }
+
+
+/* Follow the try block with catch block or finally block */
+
+package com.infosys.exceptiondemo5;
+
+  public class Demo {
+    public static void main(String args[]) {
+     int num1=10;
+     int num2=0;
+     System.out.println("Before exception");
+    try{
+        int result=num1/num2;
+       }
+      System.out.println("After exception");
+   }
+ }
+
+
+class Student {
+    private String name;
+    private int[] marks;
+    private float averageMarks;
+    
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int[] getMarks() {
+		return marks;
+	}
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+    
+	public void calculateAverageMarks() {
+		int sum=0;
+		int totalSubjects=0;
+		try {
+		    for (int i = 0; i <marks.length;i++) {
+			    sum+=marks[i];
+		    }
+		    this.averageMarks=sum/totalSubjects; //Exception will be thrown as the value of totalSubjects is 0 
+		    System.out.println("Average Marks: "+ this.averageMarks);
+		}
+	    catch(ArithmeticException e) {
+            //This block will execute only if any Arithmetic exception is thrown in try block
+		    System.out.println("Divide by Zero exception occurred!");
+	    }
+	}
+}
+
+public class Tester1{
+	public static void main(String[] args) {
+		Student student1 = new Student();
+		int[] marks = {96,65,76};
+		student1.setMarks(marks);
+		student1.calculateAverageMarks();
+	}
+}
+
+
+-------------------------------------------------------------------------------------
+package com.infosys.exceptiondemo6;
+
+public class Student {
+    private String name;
+    private int[] marks;
+    private float averageMarks;
+    
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int[] getMarks() {
+		return marks;
+	}
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+    
+	public void calculateAverageMarks() {
+		int sum=0;
+		int totalSubjects=0;
+		try {
+		    for (int i = 0; i <=marks.length;i++) {
+			    sum+=marks[i];
+		    }
+		    this.averageMarks=sum/totalSubjects; //Exception will be thrown as the value of totalSubjects is 0 
+		    System.out.println("Average Marks: "+ this.averageMarks);
+		}
+	    catch(ArithmeticException e) {
+            //This block will execute only if any Arithmetic exception is thrown in try block
+		    System.out.println("Divide by Zero exception occurred!");
+	    }
+	}
+}
+
+
+package com.infosys.exceptiondemo6;
+public class Tester{
+	public static void main(String[] args) {
+		Student student1 = new Student();
+		int[] marks = {96,65,76};
+		student1.setMarks(marks);
+		student1.calculateAverageMarks();
+	}
+}
+Output:
+
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 3
+	at com.infosys.exceptiondemo6.Student.calculateAverageMarks(Student.java:32)
+	at com.infosys.exceptiondemo6.Tester.main(Tester.java:7)
+
+
+So in the above example error is ArrayIndexOutOfBoundsException but we handled ArithmeticException 
+with the handler. So as no matching handler is found in the code, So control goes to the default
+handler which is part of JVM and it handles the exception. 
+
+-------------------------------------------------------------------------------------------------
+/* A try can have multiple catch blocks */
+
+package com.infosys.exceptiondemo7;
+
+public class Student {
+    private String name;
+    private int[] marks;
+    private float averageMarks;
+    
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int[] getMarks() {
+		return marks;
+	}
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+	public float getAverageMarks() {
+		return averageMarks;
+	}
+	public void setAverageMarks(float averageMarks) {
+		this.averageMarks = averageMarks;
+	}
+    
+	public void calculateAverageMarks() {
+		int sum=0;
+		int totalSubjects=0;
+		try {
+		    for (int i = 0; i <=marks.length;i++) {
+			    sum+=marks[i];
+		    }
+		    this.averageMarks=sum/totalSubjects; //Exception will be thrown as the value of totalSubjects is 0 
+		    System.out.println("Average Marks: "+ this.averageMarks);
+		   }
+               catch(ArithmeticException e) {
+                    //This block will execute only if any Arithmetic exception is thrown in try block
+		    System.out.println("Divide by Zero exception occurred!");
+	        }
+	      catch(ArrayIndexOutOfBoundsException e) {
+	           //This block will only execute if any ArrayIndexOutOfBoundsException occurs in try block
+	           System.out.println("Array index out of range exception occurred!");
+              }	
+	}
+   }
+
+
+package com.infosys.exceptiondemo7;
+public class Tester{
+	public static void main(String[] args) {
+		Student student = new Student();
+		int[] marks = {96,65,76};
+		student.setMarks(marks);
+		student.calculateAverageMarks();
+	}
+}
